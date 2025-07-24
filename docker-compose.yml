@@ -5,10 +5,21 @@ services:
     container_name: backend
     ports:
       - "8000:8000"
+    volumes:
+      - ./backend:/app
+    env_file:
+      - .env
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
   frontend:
     build: ./frontend
     container_name: frontend
     ports:
       - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    env_file:
+      - .env
+    command: npm run dev
     depends_on:
       - backend
